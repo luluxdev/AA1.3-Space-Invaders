@@ -7,82 +7,82 @@ using static UnityEditor.Progress;
 
 public class EnemiesController : MonoBehaviour
 {
-    public bool left; // Dirección de movimiento
-    public bool goDown; // Indica si los enemigos deben bajar
-    public float speedIncrease; // Aumento de velocidad al destruir enemigos
-    public float bulletTimer = 1; // Temporizador para disparos
+    public bool left;
+    public bool goDown;
+    public float speedIncrease;
+    public float bulletTimer = 1;
 
-    public TextMeshProUGUI scorePrint; // UI para mostrar la puntuación
-    public int score = 0; // Puntuación del jugador
-    public List<GameObject> enemies; // Lista de enemigos
+    public TextMeshProUGUI scorePrint;
+    public int score = 0;
+    public List<GameObject> enemies;
 
     void Start()
     {
-        UpdateScoreUI(); // Actualiza la UI al inicio
+        UpdateScoreUI();
     }
 
     void Update()
     {
-        UpdateScoreUI(); // Actualiza la UI cada frame
+        UpdateScoreUI();
 
-        // Movimiento de los enemigos, si no van a la izquierda, bajan
+        // Si los enemigos no van a la izquierda, bajan:
         if (left != goDown)
         {
-            transform.Translate(Vector3.down * 0.2f); // Mueve hacia abajo
+            transform.Translate(Vector3.down * 0.2f);
             goDown = left;
         }
 
-        // Lógica de disparo de los enemigos
-        if (Time.time >= bulletTimer) // Si ha pasado el tiempo para disparar
+        // Disparo de los enemigos por cada loop del temporizador:
+        if (Time.time >= bulletTimer)
         {
             GameObject targetEnemy = GetRandomAliveEnemy();
 
             if (targetEnemy != null)
             {
                 Enemies targetEnemyScript = targetEnemy.GetComponent<Enemies>();
-                targetEnemyScript.Shoot(); // El enemigo dispara
+                targetEnemyScript.Shoot();
             }
 
-            bulletTimer = Time.time + 1; // Reinicia el temporizador
+            bulletTimer = Time.time + 1; // Reinicio temporizador.
         }
     }
 
-    // Método llamado cuando un enemigo muere, aumenta la velocidad de los enemigos
+    // Aumenta la velocidad cada vez que muere un enemigo:
     public void EnemyDeath()
     {
-        speedIncrease += 0.1f; // Aumenta la velocidad en cada muerte
+        speedIncrease += 0.1f;
     }
 
-    // Obtiene un enemigo aleatorio que esté vivo
+    // Ecojo un enemigo random desde donde saldrá la bala:
     GameObject GetRandomAliveEnemy()
     {
+        // Estructura de lista donde guardo los marcianitos:
         List<GameObject> aliveEnemies = new List<GameObject>();
 
-        // Filtrar los enemigos vivos
+        // Filtro para seleccionar solo los "vivos":
         foreach (var enemy in enemies)
         {
-            if (enemy != null) // Solo agregar enemigos vivos
+            if (enemy != null)
             {
                 aliveEnemies.Add(enemy);
             }
         }
 
-        // Si hay enemigos vivos, selecciona uno aleatoriamente
         if (aliveEnemies.Count > 0)
         {
             int randomIndex = UnityEngine.Random.Range(0, aliveEnemies.Count);
             return aliveEnemies[randomIndex];
         }
 
-        return null; // No hay enemigos vivos
+        return null;
     }
 
-    // Actualiza el valor de la puntuación en la UI
+    // Actualizar la puntuación:
     private void UpdateScoreUI()
     {
-        if (scorePrint != null) // Verifica si la UI está asignada
+        if (scorePrint != null)
         {
-            scorePrint.text = score.ToString(); // Actualiza el texto de la UI con el valor actual de la puntuación
+            scorePrint.text = score.ToString();
         }
     }
 

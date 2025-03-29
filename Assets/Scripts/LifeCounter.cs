@@ -3,28 +3,29 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.SceneManagement;
 
 public class LifeCounter : MonoBehaviour
 {
-    public int hp = 3; // Puntos de vida del jugador
+    public int hp = 3;
 
-    public TextMeshProUGUI hpPrint; // Referencia al texto de la UI para mostrar la vida
+    public TextMeshProUGUI hpPrint;
 
-    public ShipController shipController; // Referencia al controlador de la nave
+    public ShipController shipController;
 
     void Start()
     {
-        UpdateHpUI(); // Asegura que la UI muestre el HP correcto al iniciar
+        UpdateHpUI();
     }
 
     void Update()
     {
-        UpdateHpUI(); // Actualiza la UI con el valor actual de hp
+        UpdateHpUI();
     }
 
+    // Si el jugador choca con un marciano, muere y vamos al menú:
     void OnTriggerEnter2D(Collider2D other)
     {
-        // Si el jugador colisiona con un enemigo, pierde toda su vida
         if (other.CompareTag("Enemy"))
         {
             hp = 0;
@@ -33,12 +34,14 @@ public class LifeCounter : MonoBehaviour
             {
                 shipController.playerHit();
             }
+
+            SceneManager.LoadScene("Menu");
         }
     }
 
+    // Actualizar la vida:
     private void UpdateHpUI()
     {
-        // Actualiza el texto de la UI con el valor actual de HP
         if (hpPrint != null)
         {
             hpPrint.text = hp.ToString();

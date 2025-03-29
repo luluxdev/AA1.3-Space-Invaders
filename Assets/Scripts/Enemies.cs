@@ -10,13 +10,12 @@ public class Enemies : MonoBehaviour
     public GameObject enemyBullet;
 
     public int scoreValue;
-    // Start is called before the first frame update
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (enemiesController.left)
@@ -29,6 +28,7 @@ public class Enemies : MonoBehaviour
 
         
     }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Wall"))
@@ -48,9 +48,7 @@ public class Enemies : MonoBehaviour
             enemiesController.score += scoreValue;
             enemiesController.EnemyDeath();
         }
-
     }
-    
 
     public void Shoot()
     {

@@ -4,24 +4,23 @@ using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
 {
-    // Velocidad del proyectil enemigo
     public float speed = 4f;
 
     void Start()
     {
-        // Destruyo el proyectil tras 5 segundos
+        // Las balas se destruyen a los 5s:
         Destroy(gameObject, 5f);
     }
 
     void Update()
     {
-        // Muevo el proyectil hacia abajo en el eje Y
+        // Muevo la bala hacia abajo:
         transform.Translate(Vector3.down * speed * Time.deltaTime);
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        // Si impacta con el jugador o una estructura se destruye
+        // Si choca con la nave o un escudo, se destruye:
         if (collision.CompareTag("Player") || collision.CompareTag("Building"))
         {
             Destroy(gameObject);
