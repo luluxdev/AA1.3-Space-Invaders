@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 
-public class HpController : MonoBehaviour
+public class LifeCounter : MonoBehaviour
 {
     public int hp = 3; // Puntos de vida del jugador
 
@@ -28,7 +28,11 @@ public class HpController : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             hp = 0;
-            shipController.playerDied();
+
+            if (shipController != null)
+            {
+                shipController.playerHit();
+            }
         }
     }
 

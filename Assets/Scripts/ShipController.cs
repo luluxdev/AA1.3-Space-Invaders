@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class ShipController : MonoBehaviour
 {
-    public float speed = 5f; // Velocidad de movimiento de la nave
-    public float leftLimit; // Límite izquierdo del movimiento
-    public float rightLimit; // Límite derecho del movimiento
+    public float speed = 5f;
+    public float leftLimit;
+    public float rightLimit;
 
-    public LifeCounter lifeCounter; // Referencia al contador de vidas
+    public LifeCounter lifeCounter;
 
-    public GameObject playerBullet; // Prefab del proyectil del jugador
+    public GameObject playerBullet;
 
     void Update()
     {
@@ -30,7 +30,7 @@ public class ShipController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Si el jugador es golpeado por una bala enemiga, se llama a playerHit()
+        // Si el jugador es golpeado por una bala enemiga:
         if (collision.CompareTag("EnemyBullet"))
         {
             playerHit();
@@ -39,10 +39,10 @@ public class ShipController : MonoBehaviour
 
     public void playerHit()
     {
-        if (lifeCounter.playerHp > 0)
+        if (lifeCounter.hp > 0)
         {
-            lifeCounter.playerHp--; // Reducir vida del jugador
-            transform.position = new Vector3(Vector3.zero.x, transform.position.y, transform.position.z); // Reposicionar la nave
+            lifeCounter.hp--;
+            transform.position = new Vector3(Vector3.zero.x, transform.position.y, transform.position.z);
         }
         else
         {
