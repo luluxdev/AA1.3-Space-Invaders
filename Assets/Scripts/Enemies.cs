@@ -26,7 +26,6 @@ public class Enemies : MonoBehaviour
         {
             rb.velocity = Vector2.right * (speed + enemiesController.speedIncrease);
         }
-
         
     }
 

@@ -43,17 +43,16 @@ public class ShipController : MonoBehaviour
     public void playerHit()
     {
         // Quito un punto a la vida y la pongo en el centro:
-        if (lifeCounter.hp > 0)
+        if (lifeCounter.hp != 0)
         {
             lifeCounter.hp--;
             transform.position = new Vector3(Vector3.zero.x, transform.position.y, transform.position.z);
         }
         // Si me quedo sin vidas, la destruyo y vuelvo al menú:
-        else
+        else if (lifeCounter.hp == 0)
         {
             Destroy(gameObject);
             SceneManager.LoadScene("Menu");
         }
     }
-
 }
